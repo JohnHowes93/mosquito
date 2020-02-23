@@ -2,8 +2,10 @@
 
 Assuming you have node, run
 
-``` npm i
-``` npm start
+``` 
+npm i
+npm start
+``` 
 
 
 ### To do
