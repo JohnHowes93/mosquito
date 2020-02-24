@@ -10,5 +10,6 @@ npm start
 
 ### To do
 
-5. fix styling
-6. save list to .txt file
+1. Filter by tag
+2. Fix styling
+3. Switch state management to context
