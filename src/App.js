@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { v1 as uuid } from 'uuid';
+
 
 import List from './components/List'
 
@@ -49,42 +51,29 @@ const ListsContainer = styled.div`
 `
 
 function App() {
-  const [lists, setLists] = useState({
-    0 : {
-    title: 'Title',
-    tags: ['tag 1', 'tag 2', 'tag 3'],
-    items: [{
-      text: 'example text',
-      completed: false
-    },
-    {
-      text: 'example text 2',
-      completed: true
-    } 
-  ]
-  }
-})
+  const initialLists = JSON.parse(window.localStorage.getItem('lists')) || {}
+  const [lists, setLists] = useState(initialLists)
+
+  useEffect(()=>{
+    window.localStorage.setItem('lists', JSON.stringify(lists))
+  }, [lists])
 
   const defaultListItem = {
     title: 'Title',
-    tags: ['tag 1', 'tag 2', 'tag 3'],
-    items: {
-      0 : {
-      text: 'example text',
-      completed: false
-    },
-    1: {
-      text: 'example text 2',
-      completed: true
-    } 
-    }
+    tags: [],
+    items: {}
+  }
+
+  const handleNewList = () => {
+    const newUUID = uuid()
+    setLists({...lists, [newUUID] : defaultListItem })
   }
 
   return (
       <Layout>
         <AppContainer>
           <ButtonContainer>
-            <CreateNewListButton onClick={ () => setLists({...lists, [Object.keys(lists).length] : defaultListItem })}>
+            <CreateNewListButton onClick={handleNewList}>
               <CreateNewListIcon icon={faPlus} />
               Create A New List
             </CreateNewListButton>

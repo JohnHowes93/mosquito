@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { v1 as uuid } from 'uuid';
+
 
 import ListItem from './ListItem'
 import Tag from './Tag'
@@ -61,7 +63,8 @@ export default ({title = '', items = [], tags = [], id, setLists, lists}) => {
     }
 
     const addNewItem = () => {
-        const newItemsList = {...lists[id].items, [Object.keys(lists[id].items).length] :defaultListItem}
+        const newUUID = uuid()
+        const newItemsList = {...lists[id].items, [newUUID] :defaultListItem}
         const newList = {...lists[id], items : newItemsList}
         setLists({...lists, [id]: newList})
     }
